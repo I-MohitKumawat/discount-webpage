@@ -96,4 +96,10 @@ class WheelSpinner {
     { color: "#FF0099", text: "#fff", label: "Nothing" },
     { color: "#33FF66", text: "#000", label: "Silver" },
   ]);
-  
+  const costGstBtn = document.querySelector('.cost-gst');
+const resultDiv = document.getElementById('result');
+
+costGstBtn.addEventListener('click', () => {
+  resultDiv.style.display = 'block'; // Show the result container
+  resultDiv.textContent = 'You Got: ' + wheel1.sectors[wheel1.getIndex()].label;
+});
