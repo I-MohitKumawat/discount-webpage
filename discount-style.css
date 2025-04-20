@@ -1,68 +1,72 @@
 :root {
-    /* 🎨 Colors */
-    --primary-color: #eaee00;
-    --secondary-color: #2ecc71;
-    --text-color: #333;
-    --background-color: #102e47;
-  
-    /* 🔠 Typography */
-    --font-size-base: 16px;
-    --font-size-lg: 24px;
-    --font-family: 'Poppins', sans-serif;
-  
-    /* 📐 Spacing */
-    --padding: 1rem;
-    --margin: 1rem;
-  
-    /* 🧱 Layout */
-    --border-radius: 8px;
-  }
-  *{
+  /* 🎨 Colors */
+  --primary-color: #eaee00;
+  --secondary-color: #2ecc71;
+  --text-color: #333;
+  --background-color: #102e47;
+
+  /* 🔠 Typography */
+  --font-size-base: 16px;
+  --font-size-lg: 24px;
+  --font-family: "Poppins", sans-serif;
+
+  /* 📐 Spacing */
+  --padding: 1rem;
+  --margin: 1rem;
+
+  /* 🧱 Layout */
+  --border-radius: 8px;
+}
+* {
   box-sizing: border-box;
-  }
-  html{
-font-size: 16px;
-margin: 0;
-padding: 0;
-  }
-  body{
-    background-color: var(--background-color);
-    font-family: var(--font-family);
+}
+html {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: var(--background-color);
+  font-family: var(--font-family);
   display: grid;
   place-items: center;
-    position: relative;
-    height: 100vh;
-    align-items: center;
-    min-height: 100vh;
-  }
-  main{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center ;
-      
-    }
-    h1{
-      color: var(--primary-color);
-    }
-  h4{
-    color: #fff;
-  }
-.nav-to-cost{
+  position: relative;
+  height: 100vh;
+  align-items: center;
+  min-height: 100vh;
+}
+main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+h1 {
+  color: var(--primary-color);
+  font-size: 50px;
+}
+h4 {
+  color: #fff;
+}
+.info-text {
+  font-size: var(--font-size-base);
+  color: var(--primary-color);
+}
+.nav-to-cost {
   background-color: #2ecc71;
   display: flex;
-    justify-content: center;
-    width: 300px;
+  justify-content: center;
+  width: 300px;
 }
-.nav-to-cost button{
-    border-radius: 50px;
-    padding: 15px;
-    margin: 4%;
-    border: none;
-    cursor: pointer;
-    font-size: var(--font-size-base);
-  }
-.nav-to-cost button:hover{
+.nav-to-cost button {
+  border-radius: 50px;
+  padding: 15px;
+  margin: 4%;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+}
+.nav-to-cost button:hover {
   background-color: #27ae60;
 }
 /* Container for each wheel */
@@ -70,7 +74,7 @@ padding: 0;
   display: inline-block;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(to bottom, #aaaaaa, #eeeeee);
+  /* background: linear-gradient(to bottom, #aaaaaa, #eeeeee); */
   margin: 20px;
   width: 300px;
   height: 300px;
@@ -99,9 +103,7 @@ padding: 0;
   margin: -15%;
   background: #fff;
   color: #333;
-  box-shadow:
-    0 0 0 8px currentColor,
-    0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
   transition: transform 0.2s ease, background-color 0.3s;
   padding: 10px;
