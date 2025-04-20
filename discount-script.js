@@ -57,12 +57,18 @@ class WheelSpinner {
     }
   
     frame() {
-      if (!this.angVel && this.spinClicked) {
-        const finalSector = this.sectors[this.getIndex()];
-        console.log(`🎉 You won: ${finalSector.label}`);
-        this.spinClicked = false;
-        return;
-      }
+        if (!this.angVel && this.spinClicked) {
+            const finalSector = this.sectors[this.getIndex()];
+            console.log(`🎉 You won: ${finalSector.label}`);
+            this.spinClicked = false;
+          
+            // 🆕 Fire a custom event when spin ends
+            this.canvas.dispatchEvent(new CustomEvent("spinEnd", {
+              detail: finalSector
+            }));
+          
+            return;
+          }
   
       this.angVel *= this.friction;
       if (this.angVel < 0.002) this.angVel = 0;
@@ -87,19 +93,61 @@ class WheelSpinner {
     }
   }
   const wheel1 = new WheelSpinner("#wheel1", "#spin1", [
-    { color: "#FFBC03", text: "#333", label: "Sweets" },
-    { color: "#FF5A10", text: "#333", label: "You lose" },
+    { color: "#FFBC03", text: "#333", label: "350" },
+    { color: "#FF5A10", text: "#333", label: "450" },
+    { color: "#FFBC03", text: "#333", label: "550" },
+    { color: "#FF5A10", text: "#333", label: "750" },
   ]);
   
   const wheel2 = new WheelSpinner("#wheel2", "#spin2", [
-    { color: "#00CCFF", text: "#fff", label: "Gold" },
-    { color: "#FF0099", text: "#fff", label: "Nothing" },
-    { color: "#33FF66", text: "#000", label: "Silver" },
+    { color: "#00CCFF", text: "#fff", label: "0%" },
+    { color: "#FF0099", text: "#fff", label: "2%" },
+    { color: "#33FF66", text: "#000", label: "5%" },
+    { color: "#00CCFF", text: "#fff", label: "10%" },
+    { color: "#FF0099", text: "#fff", label: "12%" },
+    { color: "#33FF66", text: "#000", label: "18%" },
   ]);
   const costGstBtn = document.querySelector('.cost-gst');
 const resultDiv = document.getElementById('result');
 
-costGstBtn.addEventListener('click', () => {
-  resultDiv.style.display = 'block'; // Show the result container
-  resultDiv.textContent = 'You Got: ' + wheel1.sectors[wheel1.getIndex()].label;
+// Disable the button at start
+costGstBtn.disabled = true;
+
+let wheel1Done = false;
+let wheel2Done = false;
+
+function checkIfBothWheelsDone() {
+  if (wheel1Done && wheel2Done) {
+    costGstBtn.disabled = false;
+  }
+}
+
+// Listen for spin end events
+wheel1.canvas.addEventListener("spinEnd", () => {
+  wheel1Done = true;
+  checkIfBothWheelsDone();
 });
+
+wheel2.canvas.addEventListener("spinEnd", () => {
+  wheel2Done = true;
+  checkIfBothWheelsDone();
+});
+
+// Handle Cost and GST button click
+costGstBtn.addEventListener('click', () => {
+  const gstResult = wheel1.sectors[wheel1.getIndex()].label;
+  const costResult = wheel2.sectors[wheel2.getIndex()].label;
+
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = `
+    <p>Your Cost: <strong>${costResult}</strong></p>
+    <p>Your GST: <strong>${gstResult}</strong></p>
+  `;
+
+  // Reset button and flags if you want multiple rounds
+  costGstBtn.disabled = true;
+  wheel1Done = false;
+  wheel2Done = false;
+});
+
+
