@@ -1,0 +1,51 @@
+:root {
+    /* 🎨 Colors */
+    --primary-color: #eaee00;
+    --secondary-color: #2ecc71;
+    --text-color: #333;
+    --background-color: #102e47;
+  
+    /* 🔠 Typography */
+    --font-size-base: 16px;
+    --font-size-lg: 24px;
+    --font-family: 'Poppins', sans-serif;
+  
+    /* 📐 Spacing */
+    --padding: 1rem;
+    --margin: 1rem;
+  
+    /* 🧱 Layout */
+    --border-radius: 8px;
+  }
+  html{
+font-size: 16px;
+margin: 0;
+padding: 0;
+  }
+  body{
+    background-color: var(--background-color);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-family);
+  }
+  h1{
+color: var(--primary-color);
+text-shadow: horizontal-shadow vertical-shadow blur-radius color;
+  }
+  h4{
+    color: rgb(255, 255, 255);
+  }
+.nav-to-cost{
+    background-color: #2ecc71;
+    display: flex;
+    justify-content: center;
+}
+.nav-to-cost button{
+    border-radius: 50px;
+    padding: 15px;
+    margin: 4%;
+}
+.nav-to-cost .cost-gst{
+
+}
