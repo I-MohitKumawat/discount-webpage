@@ -26,26 +26,34 @@ padding: 0;
     background-color: var(--background-color);
     display: grid;
     justify-content: center;
-    align-items: center;
+    /* align-item: center; */
     font-family: var(--font-family);
+    height: 100vh;
+    position: relative;
   }
   h1{
 color: var(--primary-color);
 text-shadow: horizontal-shadow vertical-shadow blur-radius color;
   }
   h4{
-    color: rgb(255, 255, 255);
+    color: #fff;
   }
 .nav-to-cost{
     background-color: #2ecc71;
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 2%;
+    width: 300px;
 }
 .nav-to-cost button{
     border-radius: 50px;
     padding: 15px;
     margin: 4%;
+    border: none;
+    cursor: pointer;
+  font-size: var(--font-size-base);
 }
-.nav-to-cost .cost-gst{
-
+.nav-to-cost button:hover{
+background-color: #27ae60;
 }
