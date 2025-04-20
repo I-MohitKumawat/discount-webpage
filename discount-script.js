@@ -100,12 +100,12 @@ class WheelSpinner {
   ]);
   
   const wheel2 = new WheelSpinner("#wheel2", "#spin2", [
-    { color: "#00CCFF", text: "#fff", label: "0%" },
-    { color: "#FF0099", text: "#fff", label: "2%" },
-    { color: "#33FF66", text: "#000", label: "5%" },
-    { color: "#00CCFF", text: "#fff", label: "10%" },
-    { color: "#FF0099", text: "#fff", label: "12%" },
-    { color: "#33FF66", text: "#000", label: "18%" },
+    { color: "#00CCFF", text: "#fff", label: "0" },
+    { color: "#FF0099", text: "#fff", label: "2" },
+    { color: "#33FF66", text: "#000", label: "5" },
+    { color: "#00CCFF", text: "#fff", label: "10" },
+    { color: "#FF0099", text: "#fff", label: "12" },
+    { color: "#33FF66", text: "#000", label: "18" },
   ]);
   const costGstBtn = document.querySelector('.cost-gst');
 const resultDiv = document.getElementById('result');
@@ -135,19 +135,24 @@ wheel2.canvas.addEventListener("spinEnd", () => {
 
 // Handle Cost and GST button click
 costGstBtn.addEventListener('click', () => {
-  const gstResult = wheel1.sectors[wheel1.getIndex()].label;
-  const costResult = wheel2.sectors[wheel2.getIndex()].label;
-
-  resultDiv.style.display = 'block';
-  resultDiv.innerHTML = `
-    <p>Your Cost: <strong>${costResult}</strong></p>
-    <p>Your GST: <strong>${gstResult}</strong></p>
-  `;
-
-  // Reset button and flags if you want multiple rounds
-  costGstBtn.disabled = true;
-  wheel1Done = false;
-  wheel2Done = false;
-});
+    const cost = parseFloat(wheel1.sectors[wheel1.getIndex()].label);
+    const gst = parseFloat(wheel2.sectors[wheel2.getIndex()].label);
+  
+    const gstAmount = (cost * gst) / 100;
+    const total = cost + gstAmount;
+  
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <p>Your Cost: <strong>₹${cost}</strong></p>
+      <p>Your GST (${gst}%): <strong>₹${gstAmount.toFixed(2)}</strong></p>
+      <p><strong>Total: ₹${total.toFixed(2)}</strong></p>
+    `;
+  
+    // Optional: Reset for next round
+    costGstBtn.disabled = true;
+    wheel1Done = false;
+    wheel2Done = false;
+  });
+  
 
 
