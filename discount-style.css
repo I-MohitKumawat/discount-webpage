@@ -19,11 +19,9 @@
 }
 * {
   box-sizing: border-box;
-}
-html {
-  font-size: 16px;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 body {
   background-color: var(--background-color);
@@ -44,9 +42,12 @@ main {
 h1 {
   color: var(--primary-color);
   font-size: 50px;
+  margin-top: 60px ;
 }
 h4 {
   color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 50px;
 }
 .info-text {
   font-size: var(--font-size-base);
@@ -75,6 +76,7 @@ h4 {
   position: relative;
   overflow: hidden;
   /* background: linear-gradient(to bottom, #aaaaaa, #eeeeee); */
+  /* padding: 50px; */
   margin: 20px;
   width: 300px;
   height: 300px;
