@@ -1,140 +1,99 @@
-const sectors = [
-    { color: "#FFBC03", text: "#333333", label: "Sweets" },
-    { color: "#FF5A10", text: "#333333", label: "Prize draw" },
-    { color: "#FFBC03", text: "#333333", label: "Sweets" },
-    { color: "#FF5A10", text: "#333333", label: "Prize draw" },
-    { color: "#FFBC03", text: "#333333", label: "Sweets + Prize draw" },
-    { color: "#FF5A10", text: "#333333", label: "You lose" },
-    { color: "#FFBC03", text: "#333333", label: "Prize draw" },
-    { color: "#FF5A10", text: "#333333", label: "Sweets" },
-  ];
+class WheelSpinner {
+    constructor(canvasSelector, buttonSelector, sectors) {
+      this.sectors = sectors;
+      this.tot = sectors.length;
+      this.canvas = document.querySelector(canvasSelector);
+      this.ctx = this.canvas.getContext("2d");
+      this.dia = this.ctx.canvas.width;
+      this.rad = this.dia / 2;
+      this.arc = (2 * Math.PI) / this.tot;
+      this.button = document.querySelector(buttonSelector);
   
-  const events = {
-    listeners: {},
-    addListener: function (eventName, fn) {
-      this.listeners[eventName] = this.listeners[eventName] || [];
-      this.listeners[eventName].push(fn);
-    },
-    fire: function (eventName, ...args) {
-      if (this.listeners[eventName]) {
-        for (let fn of this.listeners[eventName]) {
-          fn(...args);
-        }
-      }
-    },
-  };
+      this.ang = 0;
+      this.angVel = 0;
+      this.spinClicked = false;
+      this.friction = 0.991;
   
-  const rand = (m, M) => Math.random() * (M - m) + m;
-  const tot = sectors.length;
-  const spinEl = document.querySelector("#spin");
-  const ctx = document.querySelector("#wheel").getContext("2d");
-  const dia = ctx.canvas.width;
-  const rad = dia / 2;
-  const PI = Math.PI;
-  const TAU = 2 * PI;
-  const arc = TAU / sectors.length;
+      this.PI = Math.PI;
+      this.TAU = 2 * this.PI;
   
-  const friction = 0.991; // 0.995=soft, 0.99=mid, 0.98=hard
-  let angVel = 0; // Angular velocity
-  let ang = 0; // Angle in radians
-  
-  let spinButtonClicked = false;
-  
-  const getIndex = () => Math.floor(tot - (ang / TAU) * tot) % tot;
-  
-  function drawSector(sector, i) {
-    const ang = arc * i;
-    ctx.save();
-  
-    // COLOR
-    ctx.beginPath();
-    ctx.fillStyle = sector.color;
-    ctx.moveTo(rad, rad);
-    ctx.arc(rad, rad, rad, ang, ang + arc);
-    ctx.lineTo(rad, rad);
-    ctx.fill();
-  
-    // TEXT
-    ctx.translate(rad, rad);
-    ctx.rotate(ang + arc / 2);
-    ctx.textAlign = "right";
-    ctx.fillStyle = sector.text;
-    ctx.font = "bold 30px 'Lato', sans-serif";
-    ctx.fillText(sector.label, rad - 10, 10);
-    //
-  
-    ctx.restore();
-  }
-  
-  function rotate() {
-    const sector = sectors[getIndex()];
-    ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
-  
-    spinEl.textContent = !angVel ? "SPIN" : sector.label;
-    spinEl.style.background = sector.color;
-    spinEl.style.color = sector.text;
-  }
-  
-  function frame() {
-    // Fire an event after the wheel has stopped spinning
-    if (!angVel && spinButtonClicked) {
-      const finalSector = sectors[getIndex()];
-      events.fire("spinEnd", finalSector);
-      spinButtonClicked = false; // reset the flag
-      return;
+      this.init();
     }
   
-    angVel *= friction; // Decrement velocity by friction
-    if (angVel < 0.002) angVel = 0; // Bring to stop
-    ang += angVel; // Update angle
-    ang %= TAU; // Normalize angle
-    rotate();
-  }
+    rand(m, M) {
+      return Math.random() * (M - m) + m;
+    }
   
-  function engine() {
-    frame();
-    requestAnimationFrame(engine);
-  }
+    getIndex() {
+      return Math.floor(this.tot - (this.ang / this.TAU) * this.tot) % this.tot;
+    }
   
-  function init() {
-    sectors.forEach(drawSector);
-    rotate(); // Initial rotation
-    engine(); // Start engine
-    spinEl.addEventListener("click", () => {
-      if (!angVel) angVel = rand(0.25, 0.45);
-      spinButtonClicked = true;
-    });
-  }
+    drawSector(sector, i) {
+      const ang = this.arc * i;
+      this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.fillStyle = sector.color;
+      this.ctx.moveTo(this.rad, this.rad);
+      this.ctx.arc(this.rad, this.rad, this.rad, ang, ang + this.arc);
+      this.ctx.lineTo(this.rad, this.rad);
+      this.ctx.fill();
   
-  init();
+      this.ctx.translate(this.rad, this.rad);
+      this.ctx.rotate(ang + this.arc / 2);
+      this.ctx.textAlign = "right";
+      this.ctx.fillStyle = sector.text;
+      this.ctx.font = "bold 20px 'Lato', sans-serif";
+      this.ctx.fillText(sector.label, this.rad - 10, 10);
+      this.ctx.restore();
+    }
   
-  events.addListener("spinEnd", (sector) => {
-    console.log(`Woop! You won ${sector.label}`);
-  });
-  const spinBtn = document.querySelector('#spin');
-
-// Hover effect (scale up)
-spinBtn.addEventListener('mouseenter', () => {
-  spinBtn.style.transform = 'scale(1.1)';
-  spinBtn.style.transition = 'transform 0.2s ease';
-});
-
-// Remove hover effect (back to normal)
-spinBtn.addEventListener('mouseleave', () => {
-  spinBtn.style.transform = 'scale(1)';
-});
-
-// Click effect (scale down)
-spinBtn.addEventListener('mousedown', () => {
-  spinBtn.style.transform = 'scale(0.9)';
-});
-
-// On mouse release, go back to hover scale or normal
-spinBtn.addEventListener('mouseup', () => {
-  // Check if still hovered
-  if (spinBtn.matches(':hover')) {
-    spinBtn.style.transform = 'scale(1.1)';
-  } else {
-    spinBtn.style.transform = 'scale(1)';
+    rotate() {
+      const sector = this.sectors[this.getIndex()];
+      this.canvas.style.transform = `rotate(${this.ang - this.PI / 2}rad)`;
+  
+      this.button.textContent = !this.angVel ? "SPIN" : sector.label;
+      this.button.style.background = sector.color;
+      this.button.style.color = sector.text;
+    }
+  
+    frame() {
+      if (!this.angVel && this.spinClicked) {
+        const finalSector = this.sectors[this.getIndex()];
+        console.log(`🎉 You won: ${finalSector.label}`);
+        this.spinClicked = false;
+        return;
+      }
+  
+      this.angVel *= this.friction;
+      if (this.angVel < 0.002) this.angVel = 0;
+      this.ang += this.angVel;
+      this.ang %= this.TAU;
+      this.rotate();
+    }
+  
+    engine() {
+      this.frame();
+      requestAnimationFrame(() => this.engine());
+    }
+  
+    init() {
+      this.sectors.forEach((s, i) => this.drawSector(s, i));
+      this.rotate();
+      this.engine();
+      this.button.addEventListener("click", () => {
+        if (!this.angVel) this.angVel = this.rand(0.25, 0.45);
+        this.spinClicked = true;
+      });
+    }
   }
-});
+  const wheel1 = new WheelSpinner("#wheel1", "#spin1", [
+    { color: "#FFBC03", text: "#333", label: "Sweets" },
+    { color: "#FF5A10", text: "#333", label: "You lose" },
+  ]);
+  
+  const wheel2 = new WheelSpinner("#wheel2", "#spin2", [
+    { color: "#00CCFF", text: "#fff", label: "Gold" },
+    { color: "#FF0099", text: "#fff", label: "Nothing" },
+    { color: "#33FF66", text: "#000", label: "Silver" },
+  ]);
+  
