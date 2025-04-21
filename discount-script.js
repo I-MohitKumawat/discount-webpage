@@ -107,36 +107,37 @@ class WheelSpinner {
     { color: "#FF0099", text: "#fff", label: "12" },
     { color: "#33FF66", text: "#000", label: "18" },
   ]);
+
+
   const costGstBtn = document.querySelector('.cost-gst');
-const resultDiv = document.getElementById('result');
-
-// Disable the button at start
-costGstBtn.disabled = true;
-
-let wheel1Done = false;
-let wheel2Done = false;
-
-function checkIfBothWheelsDone() {
-  if (wheel1Done && wheel2Done) {
-    costGstBtn.disabled = false;
-  }
-}
-
-// Listen for spin end events
-wheel1.canvas.addEventListener("spinEnd", () => {
-  wheel1Done = true;
-  checkIfBothWheelsDone();
-});
-
-wheel2.canvas.addEventListener("spinEnd", () => {
-  wheel2Done = true;
-  checkIfBothWheelsDone();
-});
-
-// Handle Cost and GST button click
-costGstBtn.addEventListener('click', () => {
-    const cost = parseFloat(wheel1.sectors[wheel1.getIndex()].label);
-    const gst = parseFloat(wheel2.sectors[wheel2.getIndex()].label);
+  const resultDiv = document.getElementById('result');
+  
+  // Disable the button initially
+  costGstBtn.disabled = true;
+  
+  // 🔧 Include only the wheels you want to track here
+  const wheels = [wheel1]; // or [wheel1, wheel2], etc.
+  
+  const wheelDoneStates = new Array(wheels.length).fill(false);
+  
+  // ✅ Listen for spinEnd events only on the wheels in the array
+  wheels.forEach((wheel, index) => {
+    wheel.canvas.addEventListener("spinEnd", () => {
+      wheelDoneStates[index] = true;
+  
+      // Enable button only when ALL wheels you listed are done
+      if (wheelDoneStates.every(done => done)) {
+        costGstBtn.disabled = false;
+      }
+    });
+  });
+  
+  // 💥 Handle button click
+  costGstBtn.addEventListener('click', () => {
+    const values = wheels.map(w => parseFloat(w.sectors[w.getIndex()].label));
+  
+    const cost = values[0];        // First wheel = cost
+    const gst = values[1] || 0;    // Second wheel = GST, or 0 if not provided
   
     const gstAmount = (cost * gst) / 100;
     const total = cost + gstAmount;
@@ -148,11 +149,30 @@ costGstBtn.addEventListener('click', () => {
       <p><strong>Total: ₹${total.toFixed(2)}</strong></p>
     `;
   
-    // Optional: Reset for next round
+    // Reset for next round
     costGstBtn.disabled = true;
-    wheel1Done = false;
-    wheel2Done = false;
+    wheelDoneStates.fill(false);
   });
+  
+
+
+  const openBtn = document.getElementById('openPopup');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.getElementById('closePopup');
+
+    openBtn.addEventListener('click', () => {
+      popup.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+      }
+    });
   
 
 

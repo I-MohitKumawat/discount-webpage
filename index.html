@@ -25,10 +25,7 @@
             <div id="spin1" class="spin-button">SPIN</div>
         </div>
         <div class="info-text">Calculate Your GST</div>
-      <div class="wheel-box">
-        <canvas id="wheel2" width="300" height="300"></canvas>
-        <div id="spin2" class="spin-button">SPIN</div>
-      </div>
+      
       <div
         id="result"
         style="
@@ -42,9 +39,17 @@
 
       <nav class="nav-to-cost">
         <button class="cost-gst">Cost and Gst</button>
-        <button class="discount">Discount</button>
+        <a href="./friendly-discount-page.html" class="discount">Discount</a>
       </nav>
     </main>
+
+     <!-- ===== POPUP MODAL ===== -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span id="closePopup" class="close">&times;</span>
+      <p>You clicked the Discount button! 🎉</p>
+    </div>
+  </div>
 
     <script src="discount-script.js"></script>
   </body>
