@@ -1,53 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DISCOUNTS!!!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main>
-    <h1>BOLT PROJECTS</h1>
-    <h3>Spin To Win Your Discounts!!</h3>
-
-    <div class="wheel-section">
+  <link rel="stylesheet" href="discount-style.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Get Your Discount Now!!</title>
+  </head>
+  <body>
+    <main>
+      <h1>BOLT PROJECTS</h1>
+      <h4>Spin to Win Your Discount</h4>
+      <!-- ////////////
+            Spin the wheel
+        ////////////// -->
+        <div class="info-text">Calculate Your Cost</div>
+        <div class="wheel-box">
+            <canvas id="wheel1" width="300" height="300"></canvas>
+            <div id="spin1" class="spin-button">SPIN</div>
+        </div>
+        <div class="info-text">Calculate Your GST</div>
       <div class="wheel-box">
-        <canvas id="wheel1" width="250" height="250"></canvas>
-        <button id="spinBtn1" onclick="spinWheel('wheel1', 1)">Spin Wheel 1</button>
+        <canvas id="wheel2" width="300" height="300"></canvas>
+        <div id="spin2" class="spin-button">SPIN</div>
       </div>
-      <div class="wheel-box">
-        <canvas id="wheel2" width="250" height="250"></canvas>
-        <button id="spinBtn2" onclick="spinWheel('wheel2', 2)">Spin Wheel 2</button>
-      </div>
-    </div>
+      <div
+        id="result"
+        style="
+          display: none;
+          color: white;
+          font-size: 1.2rem;
+          text-align: center;
+          margin-bottom: 1rem;
+        "
+      ></div>
 
-    <!-- Output table (initially hidden) -->
-    <div class="result-table" id="resultTable" style="display: none;">
-      <table>
-        <thead>
-          <tr>
-            <th>Received Cost</th>
-            <th>Discount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td id="result1">-</td>
-            <td id="result2">-</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <nav class="nav-to-cost">
+        <button class="cost-gst">Cost and Gst</button>
+        <button class="discount">Discount</button>
+      </nav>
+    </main>
 
-    <!-- Functional buttons -->
-    <nav>
-      <button class="COST" onclick="handleCostGST()">Cost / GST</button>
-      <button class="DISCOUNT">Discount</button>
-    </nav>
-  </main>
-
-  <script src="script.js"></script>
-</body>
+    <script src="discount-script.js"></script>
+  </body>
 </html>
