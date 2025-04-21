@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DISCOUNTS!!!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>BOLT PROJECTS</h1>
+    <h3>Spin To Win Your Discounts!!</h3>
+
+    <div class="wheel-section">
+      <div class="wheel-box">
+        <canvas id="wheel1" width="250" height="250"></canvas>
+        <button id="spinBtn1" onclick="spinWheel('wheel1', 1)">Spin Wheel 1</button>
+      </div>
+      <div class="wheel-box">
+        <canvas id="wheel2" width="250" height="250"></canvas>
+        <button id="spinBtn2" onclick="spinWheel('wheel2', 2)">Spin Wheel 2</button>
+      </div>
+    </div>
+
+    <!-- Output table (initially hidden) -->
+    <div class="result-table" id="resultTable" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Received Cost</th>
+            <th>Discount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="result1">-</td>
+            <td id="result2">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Functional buttons -->
+    <nav>
+      <button class="COST" onclick="handleCostGST()">Cost / GST</button>
+      <button class="DISCOUNT">Discount</button>
+    </nav>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
