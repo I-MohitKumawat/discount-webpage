@@ -1,28 +1,23 @@
 :root {
-  /* 🎨 Colors */
   --primary-color: #eaee00;
   --secondary-color: #2ecc71;
   --text-color: #333;
   --background-color: #102e47;
-
-  /* 🔠 Typography */
   --font-size-base: 16px;
   --font-size-lg: 24px;
   --font-family: "Poppins", sans-serif;
-
-  /* 📐 Spacing */
   --padding: 1rem;
   --margin: 1rem;
-
-  /* 🧱 Layout */
   --border-radius: 8px;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-size: 16px;
 }
+
 body {
   background-color: var(--background-color);
   font-family: var(--font-family);
@@ -33,56 +28,41 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+
 main {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
+
 h1 {
   color: var(--primary-color);
   font-size: 50px;
-  margin-top: 60px ;
+  margin-top: 60px;
 }
+
 h4 {
   color: #fff;
   font-size: 1.1rem;
   margin-bottom: 50px;
 }
+
 .info-text {
   font-size: var(--font-size-base);
   color: var(--primary-color);
 }
-.nav-to-cost {
-  background-color: #2ecc71;
-  display: flex;
-  justify-content: center;
-  width: 300px;
-}
-.nav-to-cost button {
-  border-radius: 50px;
-  padding: 15px;
-  margin: 4%;
-  border: none;
-  cursor: pointer;
-  font-size: var(--font-size-base);
-}
-.nav-to-cost button:hover {
-  background-color: #27ae60;
-}
+
 /* Container for each wheel */
 .wheel-box {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  /* background: linear-gradient(to bottom, #aaaaaa, #eeeeee); */
-  /* padding: 50px; */
   margin: 20px;
   width: 300px;
   height: 300px;
 }
 
-/* The wheel canvas */
 .wheel-box canvas {
   display: block;
   width: 100%;
@@ -114,7 +94,6 @@ h4 {
   text-overflow: ellipsis;
 }
 
-/* Add a little triangle indicator on top of the spin button */
 .spin-button::after {
   content: "";
   position: absolute;
@@ -124,7 +103,6 @@ h4 {
   border-top: none;
 }
 
-/* Interaction effects */
 .spin-button:hover {
   transform: scale(1.05);
 }
@@ -133,25 +111,67 @@ h4 {
   transform: scale(0.95);
 }
 
-/* Responsive row and column helpers */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+/* Result box */
 #result {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 10px 20px;
   font-weight: bold;
 }
+
 #result p {
   margin: 0.3rem 0;
+}
+
+/* Button navigation box */
+.nav-to-cost {
+  background-color: #2ecc71;
+  display: flex;
+  justify-content: center;
+  width: 300px;
+}
+
+/* Actual button (Cost and Gst) */
+.nav-to-cost button {
+  border-radius: 50px;
+  padding: 15px;
+  margin: 4%;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  background-color: #2ecc71;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.nav-to-cost button:hover {
+  background-color: #27ae60;
+}
+
+.nav-to-cost {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  width: 300px;
+}
+
+.nav-to-cost button,
+.nav-to-cost a {
+  display: inline-block;
+  border-radius: 50px;
+  padding: 15px;
+  margin: 4%;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  background-color: #ffffff;  /* White background */
+  color: #000000;             /* Black text */
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.nav-to-cost button:hover,
+.nav-to-cost a:hover {
+  background-color: #e0e0e0; /* Light gray on hover */
 }
