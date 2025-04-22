@@ -127,8 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const wheels = [];
   const wheelDoneStates = [];
 
+  let currentWheelId = null;
+
   containers.forEach((container, index) => {
     const id = container.getAttribute("id") || `wheel${index + 1}`;
+    currentWheelId = id; // store it for later use
+
     const canvas = container.querySelector("canvas");
     const sectors = sectorPresets[id] || sectorPresets["wheel1"]; // fallback
 
@@ -161,6 +165,8 @@ costGstBtn?.addEventListener("click", () => {
   const gst = 12;
   const gstAmount = (cost * gst) / 100;
   const total = cost + gstAmount;
+  localStorage.setItem("originalTotal", total.toFixed(2));
+
 
   // Inject result into popup
   gstResultContent.innerHTML = `
