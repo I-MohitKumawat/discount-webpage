@@ -42,7 +42,7 @@ main {
 h1 {
   color: var(--primary-color);
   font-size: 50px;
-  margin-top: 60px ;
+  margin-top: 2% ;
 }
 h4 {
   color: #fff;
@@ -235,19 +235,19 @@ h4 {
   right: 14px;
   font-size: 1.5rem;
   cursor: pointer;
-  color: white;
+  color: rgb(0, 255, 255);
 }
 .calc-row {
   display: flex;
   justify-content: space-between;
   font-size: 1.1rem;
   margin: 8px 0;
-  color: #fff;
+  color: #00ff2a;
 }
 
 .calc-row.total {
   font-weight: bold;
   font-size: 1.2rem;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #fc0000;
   padding-top: 10px;
 }
