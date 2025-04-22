@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spin for Discount</title>
   <link rel="stylesheet" href="discount-style.css" />
-</head>
-<body>
-  <main>
-    <h1>BOLT PROJECTS</h1>
-    <h4>Spin to Win Your Discount</h4>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Get Your Discount Now!!</title>
+  </head>
+  <body>
+    <main>
+      <h1>BOLT PROJECTS</h1>
+      <h4>Spin to Win Your Discount</h4>
+      <!-- ////////////
+            Spin the wheel
+        ////////////// -->
+        <div class="info-text">Calculate Your Cost</div>
+        <div class="wheel-box">
+            <canvas id="wheel1" width="300" height="300"></canvas>
+            <div id="spin1" class="spin-button">SPIN</div>
+        </div>
+        <div class="info-text">Calculate Your GST</div>
+      <div class="wheel-box">
+        <canvas id="wheel2" width="300" height="300"></canvas>
+        <div id="spin2" class="spin-button">SPIN</div>
+      </div>
+      <div
+        id="result"
+        style="
+          display: none;
+          color: white;
+          font-size: 1.2rem;
+          text-align: center;
+          margin-bottom: 1rem;
+        "
+      ></div>
+      <nav class="nav-to-cost">
+        <button class="cost-gst">Cost and Gst</button>
+        <a href="discount.html" class="cost-gst discount-link">Discount</a>
+      </nav>
+      
+    </main>
 
-    <div class="info-text">Spin the Discount Wheel</div>
-    <div class="wheel-box">
-      <canvas id="discountWheel" width="300" height="300"></canvas>
-      <div id="spinDiscount" class="spin-button">SPIN</div>
-    </div>
-  </main>
-
-  <script src="discount-script.js"></script>
-  <script>
-    const discountWheel = new WheelSpinner("#discountWheel", "#spinDiscount", [
-      { color: "#00CCFF", text: "#fff", label: "350" },
-      { color: "#FF0099", text: "#fff", label: "400" },
-      { color: "#33FF66", text: "#000", label: "450" },
-      { color: "#00CCFF", text: "#fff", label: "500" },
-      { color: "#FF0099", text: "#fff", label: "550" },
-      { color: "#33FF66", text: "#000", label: "600" },
-      { color: "#FF0099", text: "#fff", label: "650" },
-      { color: "#33FF66", text: "#000", label: "700" },
-      { color: "#FF0099", text: "#fff", label: "750" },
-      { color: "#33FF66", text: "#000", label: "800" },
-
-
-    ]);
-  </script>
-</body>
+    <script src="discount-script.js"></script>
+  </body>
 </html>
