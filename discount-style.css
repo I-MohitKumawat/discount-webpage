@@ -164,8 +164,8 @@ h4 {
   border: none;
   cursor: pointer;
   font-size: var(--font-size-base);
-  background-color: #ffffff;  /* White background */
-  color: #000000;             /* Black text */
+  background-color: #15ee77;  /* White background */
+  color: #2200b8;             /* Black text */
   text-decoration: none;
   text-align: center;
   transition: background-color 0.3s ease;
