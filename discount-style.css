@@ -69,11 +69,11 @@ h4 {
   text-decoration: none;
   font-size: var(--font-size-base);
 }
-.nav-to-cost button,a:hover {
-  background-color: #27ae60;
+.nav-to-cost button:hover, a:hover {
+  background-color: #02923c;
 }
 /* Container for each wheel */
-.wheel-box {
+.wheel-container {
   display: inline-block;
   position: relative;
   overflow: hidden;
@@ -85,7 +85,7 @@ h4 {
 }
 
 /* The wheel canvas */
-.wheel-box canvas {
+.wheel-container canvas {
   display: block;
   width: 100%;
   height: 100%;
@@ -93,6 +93,7 @@ h4 {
 
 /* Spin button */
 .spin-button {
+  padding: 0;
   font-size: clamp(0.8rem, 3vw, 1.2rem);
   user-select: none;
   cursor: pointer;
@@ -158,34 +159,95 @@ h4 {
   margin: 0.3rem 0;
 }
 
+.cost-gst {
+  background-color: var(--secondary-color);
+  color: black;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.cost-gst:enabled {
+  /* background-color: #28a745;    Green for active */
+  color: white;
+  cursor: pointer;
+}
+
+
+/* Add animation */
 .popup {
   display: none;
   position: fixed;
-  top: 0;
+  z-index: 1000;
   left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.popup.show {
+  display: flex;
 }
 
 .popup-content {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 10px;
-  min-width: 300px;
+  background-color: #222;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
   text-align: center;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  transform: scale(0.95);
+  animation: popupScale 0.3s ease forwards;
+}
+
+/* Fade in the background */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scale the popup content */
+@keyframes popupScale {
+  to {
+    transform: scale(1);
+  }
+}
+
+.popup-content p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
 }
 
 .close {
   position: absolute;
-  right: 15px;
   top: 10px;
+  right: 14px;
+  font-size: 1.5rem;
   cursor: pointer;
-  font-size: 24px;
-  color: #333;
+  color: white;
+}
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  margin: 8px 0;
+  color: #fff;
+}
+
+.calc-row.total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-top: 1px solid #aaa;
+  padding-top: 10px;
 }
