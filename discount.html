@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="discount-style.css" />
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="discount-style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,36 +16,156 @@
     <main>
       <h1>BOLT PROJECTS</h1>
       <h4>Spin to Win Your Discount</h4>
-      <!-- ////////////
-            Spin the wheel
-        ////////////// -->
-        <div class="info-text">Calculate Your Cost</div>
-        <div class="wheel-box">
-            <canvas id="wheel1" width="300" height="300"></canvas>
-            <div id="spin1" class="spin-button">SPIN</div>
-        </div>
-        <div class="info-text">Calculate Your GST</div>
+
+      <!-- Single Wheel for Discount -->
+      <div class="info-text">Your Discount</div>
       <div class="wheel-box">
-        <canvas id="wheel2" width="300" height="300"></canvas>
-        <div id="spin2" class="spin-button">SPIN</div>
+        <canvas id="wheel1" width="300" height="300"></canvas>
+        <div id="spin1" class="spin-button">SPIN</div>
       </div>
+
+      <!-- Result Area -->
       <div
         id="result"
         style="
           display: none;
-          color: white;
+          color: rgb(111, 247, 0);
           font-size: 1.2rem;
           text-align: center;
           margin-bottom: 1rem;
         "
       ></div>
+
+     
+
+
+      <!-- Navigation -->
       <nav class="nav-to-cost">
-        <button class="cost-gst">Cost and Gst</button>
-        <a href="discount.html" class="cost-gst discount-link">Discount</a>
+        <a href="index.html" class="cost-gst discount-link">Back</a>
       </nav>
-      
     </main>
 
-    <script src="discount-script.js"></script>
+    <script>
+      // Spinning wheel logic
+      class WheelSpinner {
+        constructor(canvasSelector, buttonSelector, sectors) {
+          this.sectors = sectors;
+          this.tot = sectors.length;
+          this.canvas = document.querySelector(canvasSelector);
+          this.ctx = this.canvas.getContext("2d");
+          this.dia = this.ctx.canvas.width;
+          this.rad = this.dia / 2;
+          this.arc = (2 * Math.PI) / this.tot;
+          this.button = document.querySelector(buttonSelector);
+
+          this.ang = 0;
+          this.angVel = 0;
+          this.spinClicked = false;
+          this.friction = 0.991;
+
+          this.PI = Math.PI;
+          this.TAU = 2 * this.PI;
+
+          this.init();
+        }
+
+        rand(m, M) {
+          return Math.random() * (M - m) + m;
+        }
+
+        getIndex() {
+          return Math.floor(this.tot - (this.ang / this.TAU) * this.tot) % this.tot;
+        }
+
+        drawSector(sector, i) {
+          const ang = this.arc * i;
+          this.ctx.save();
+          this.ctx.beginPath();
+          this.ctx.fillStyle = sector.color;
+          this.ctx.moveTo(this.rad, this.rad);
+          this.ctx.arc(this.rad, this.rad, this.rad, ang, ang + this.arc);
+          this.ctx.lineTo(this.rad, this.rad);
+          this.ctx.fill();
+
+          this.ctx.translate(this.rad, this.rad);
+          this.ctx.rotate(ang + this.arc / 2);
+          this.ctx.textAlign = "right";
+          this.ctx.fillStyle = sector.text;
+          this.ctx.font = "bold 20px 'Lato', sans-serif";
+          this.ctx.fillText(sector.label, this.rad - 10, 10);
+          this.ctx.restore();
+        }
+
+        rotate() {
+          const sector = this.sectors[this.getIndex()];
+          this.canvas.style.transform = `rotate(${this.ang - this.PI / 2}rad)`;
+
+          this.button.textContent = !this.angVel ? "SPIN" : sector.label;
+          this.button.style.background = sector.color;
+          this.button.style.color = sector.text;
+        }
+
+        frame() {
+          if (!this.angVel && this.spinClicked) {
+            const finalSector = this.sectors[this.getIndex()];
+            console.log(`🎉 You won: ${finalSector.label}`);
+            this.spinClicked = false;
+
+            // 🆕 Fire a custom event when spin ends
+            this.canvas.dispatchEvent(new CustomEvent("spinEnd", {
+              detail: finalSector
+            }));
+
+            return;
+          }
+
+          this.angVel *= this.friction;
+          if (this.angVel < 0.002) this.angVel = 0;
+          this.ang += this.angVel;
+          this.ang %= this.TAU;
+          this.rotate();
+        }
+
+        engine() {
+          this.frame();
+          requestAnimationFrame(() => this.engine());
+        }
+
+        init() {
+          this.sectors.forEach((s, i) => this.drawSector(s, i));
+          this.rotate();
+          this.engine();
+          this.button.addEventListener("click", () => {
+            if (!this.angVel) this.angVel = this.rand(0.25, 0.45);
+            this.spinClicked = true;
+          });
+        }
+      }
+
+      // This is where you can easily change the outcomes of the wheel
+      const wheel1 = new WheelSpinner("#wheel1", "#spin1", [
+        { color: "#FFBC03", text: "#333", label: "350" },
+        { color: "#FF5A10", text: "#333", label: "400" },
+        { color: "#FFBC03", text: "#333", label: "450" },
+        { color: "#FF5A10", text: "#333", label: "500" },
+        { color: "#FFBC03", text: "#333", label: "550" },
+        { color: "#FF5A10", text: "#333", label: "600" },
+        { color: "#FFBC03", text: "#333", label: "650" },
+        { color: "#FF5A10", text: "#333", label: "700" },
+        { color: "#FFBC03", text: "#333", label: "750" },
+        { color: "#FF5A10", text: "#333", label: "800" },
+        
+      
+      ]);
+
+      const costGstBtn = document.querySelector('#see-discount');
+      const resultDiv = document.getElementById('result');
+
+      costGstBtn.addEventListener('click', () => {
+        const selectedDiscount = wheel1.sectors[wheel1.getIndex()].label;
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `You won a ${selectedDiscount} discount!`;
+      });
+    </script>
   </body>
 </html>

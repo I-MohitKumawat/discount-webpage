@@ -62,7 +62,7 @@ class WheelSpinner {
             console.log(`🎉 You won: ${finalSector.label}`);
             this.spinClicked = false;
           
-            // 🆕 Fire a custom event when spin ends
+            // 🆕 Fire a custom event whenspin ends
             this.canvas.dispatchEvent(new CustomEvent("spinEnd", {
               detail: finalSector
             }));
