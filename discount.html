@@ -16,28 +16,18 @@
       <canvas id="discountWheel" width="300" height="300"></canvas>
       <div id="spinDiscount" class="spin-button">SPIN</div>
     </div>
-
-    <div id="result" style="display: none;">
-      <p>Your Discount: <strong id="discountValue">—</strong>%</p>
-    </div>
   </main>
 
   <script src="discount-script.js"></script>
   <script>
     const discountWheel = new WheelSpinner("#discountWheel", "#spinDiscount", [
-      { color: "#00CCFF", text: "#fff", label: "0" },
+      { color: "#00CCFF", text: "#fff", label: "" },
       { color: "#FF0099", text: "#fff", label: "2" },
       { color: "#33FF66", text: "#000", label: "5" },
       { color: "#00CCFF", text: "#fff", label: "10" },
       { color: "#FF0099", text: "#fff", label: "12" },
       { color: "#33FF66", text: "#000", label: "18" },
     ]);
-
-    discountWheel.canvas.addEventListener("spinEnd", (e) => {
-      const result = e.detail.label;
-      document.getElementById("discountValue").textContent = result;
-      document.getElementById("result").style.display = "block";
-    });
   </script>
 </body>
 </html>
